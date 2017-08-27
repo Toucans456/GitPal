@@ -20,6 +20,7 @@ import {Card, CardText } from 'material-ui/Card';
 
 
 const MyPartners = (props) => {
+  console.log('This is the props from MyPartners ', props);
   return (
     <Paper style={ {width: '95%', margin: 'auto', marginTop: 12, padding: 12 } }>
       <Card>
@@ -52,6 +53,7 @@ const MyPartners = (props) => {
 };
 
 const mapStateToProps = (state) => {
+  console.log('State is: ', state);
   return {
     // pairedUsers: state.pairedUsers
   };
