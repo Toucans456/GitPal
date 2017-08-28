@@ -25,7 +25,6 @@ class ProjectDetails extends React.Component {
     this.state = {
       interest: false,
       open: false,
-      disableUsers: true,
     };
     this.toggleInterest = this.toggleInterest.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
@@ -77,9 +76,6 @@ class ProjectDetails extends React.Component {
   }
 
   clickHandler() {
-    this.setState({
-      disableUsers: false,
-    });
     this.handleInterest();
     this.handleOpen();
   }
@@ -119,7 +115,7 @@ class ProjectDetails extends React.Component {
               <ToolbarTitle text={`Find a partner for ${ this.props.project.project }`} />
             </ToolbarGroup>
             <ToolbarGroup lastChild={ true }>
-              <RaisedButton primary={ true } onClick={ this.clickHandler } label={ this.props.project.interested ? 'No longer interested': 'I\'m Interested!' }/>
+              <RaisedButton primary={ true } onClick={ this.clickHandler } label={ this.props.project.interested ? 'No longer interested': 'Interested!' }/>
             </ToolbarGroup>
           </Toolbar>
           <Dialog
@@ -130,7 +126,7 @@ class ProjectDetails extends React.Component {
             >
           {this.props.project.interested? 'Choose a partner!' : 'Are you sure?' }
         </Dialog>
-          <UserList users={ this.props.users } projectId={ this.props.project.id } isClickable={ this.state.disableUsers }/>
+          <UserList users={ this.props.users } projectId={ this.props.project.id } />
         </Paper>
       </Paper>
     )

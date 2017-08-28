@@ -51,9 +51,9 @@ class App extends React.Component {
     // this.handleLogout = this.handleLogout.bind(this);
   }
 
-// componentDidMount() {
-//   this.getPairs()
-// }
+componentDidMount() {
+  this.getPairs()
+}
 
 getPairs() {
     axios.get('/API/pairs')
@@ -89,13 +89,10 @@ getPairs() {
   checkAuthenticated() {
     axios.get('/auth/authenticated')
       .then((res) => {
-        if (res.data !== false) {
-          this.setState({ loggedIn: res.data });
-          this.getMessages();
-          this.getProjects();
-          this.getPairs()
-          this.props.loggedInUser(res.data);
-        }
+        this.setState({ loggedIn: res.data });
+        this.getMessages();
+        this.getProjects();
+        this.props.loggedInUser(res.data);
       });
   }
 
@@ -127,7 +124,7 @@ getPairs() {
      If user is not logged in (logged out) display landing page
     */
     if (this.state.loggedIn.language) {
-      //console.log('App rendering', this.state.loggedIn);
+      console.log('App rendering', this.state.loggedIn);
       return (
         <BrowserRouter>
           <div>
@@ -167,7 +164,7 @@ getPairs() {
     } else if (this.state.loggedIn) {
       return <Questionnaire user={this.state.loggedIn} />;
     } else {
-      console.log('Logging on', this.state);
+      console.log('LOGGING ON', this.state);
           return <Landing checkAuth={ this.checkAuthenticated } />;
     }
   }
