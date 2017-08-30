@@ -187,6 +187,22 @@ module.exports = {
       })
     },
 
+    allUsers: function getAllUsers(req, res) {
+      return new Promise((resolve, reject) => {
+        const dbSession = dbDriver.session();
+        dbSession.run(
+          `MATCH (users:User) RETURN users`
+        )
+          .then((res) => {
+            resolve(res.records.map(user =>
+              new db.models.User(user.get('users'))
+            ));
+          })
+          .catch(reject)
+          .then(() => dbSession.close());
+      })
+    },
+
     // Returns an array of user objects--one for each
     // user with which the requesting user is paired
     pairs: function getPairs(req) {
@@ -251,7 +267,10 @@ module.exports = {
           SET group.progress = project.structure
           return user, pair, group, project
         `)
-          .then(resolve)
+          .then((res) => {
+            const pair = res.records[0];
+            resolve(new db.models.User(pair.get('pair')));
+          })
           .catch(reject)
           .then(() => dbSession.close());
       });
